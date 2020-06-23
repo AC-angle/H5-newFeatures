@@ -1,0 +1,46 @@
+{
+  "name": "h5-newfeatures",
+  "version": "0.1.0",
+  "description": "🗿 html5的一些新特性，当然，也包括html的一些有价值的细节。",
+  "main": "build/main.js",
+  "scripts": {
+    "start": "npm install && npm run dev",
+    "clean": "cuf -d build",
+    "build": "npm run clean && npm run prod",
+    "dev": "node_modules/.bin/webpack-dev-server --config webpack.dev.js",
+    "prod": "node_modules/.bin/webpack --config webpack.prod.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AC-angle/H5-newFeatures.git"
+  },
+  "keywords": [
+    "h5"
+  ],
+  "author": "心叶（yelloxing@gmail.com）",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/AC-angle/H5-newFeatures/issues"
+  },
+  "homepage": "https://github.com/AC-angle/H5-newFeatures#readme",
+  "devDependencies": {
+    "@babel/core": "^7.10.3",
+    "@babel/preset-env": "^7.10.3",
+    "babel-loader": "^8.1.0",
+    "css-loader": "^3.6.0",
+    "cuf": "^1.2.0",
+    "icrush-loader": "^0.2.1",
+    "icrush-loader-plug": "^0.2.1",
+    "icrush-style-loader": "^1.0.2",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0",
+    "webpack-merge": "^4.2.2"
+  },
+  "dependencies": {
+    "@yelloxing/normalize.css": "^0.2.2",
+    "icrush": "^2.0.1",
+    "image2d": "^1.7.2",
+    "wscode": "^1.7.4"
+  }
+}

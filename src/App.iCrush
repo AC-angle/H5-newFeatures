@@ -1,0 +1,83 @@
+<template>
+    <div class='root'>
+        <ul class="menu">
+            <li class="title">🗿HTML</li>
+            <li @click='goto("domSync")' ctrl-active-value:domSync='flag'>[0] DOM操作是同步还是异步的</li>
+        </ul>
+        <div class="page">
+            <component :is='page'></component>
+        </div>
+    </div>
+</template>
+<script>
+    import goRouter from './lazy-loader.js';
+
+    export default {
+        data() {
+            return {
+                page: null,
+                flag: ""
+            };
+        },
+        mounted() {
+
+            let hash = (window.location.hash + "").replace(/^#\/{0,1}/, '');
+
+            // 如果没有指定使用默认路由
+            if (hash == '') window.location.hash = hash = 'domSync';
+
+            this.goto(hash);
+
+        },
+        methods: {
+            goto(pagename) {
+                this.flag = pagename;
+                goRouter(pagename, page => {
+                    this.page = page;
+                });
+            }
+        }
+    };
+
+</script>
+<style>
+    div.root{
+        white-space: nowrap;
+    }
+    ul.menu,
+    div.page {
+        display: inline-block;
+        vertical-align: top;
+        height: 100vh;
+        padding: 10px;
+        overflow: auto;
+        white-space: normal;
+    }
+
+    ul.menu {
+        border-right: 1px solid gray;
+        width: 300px;
+    }
+
+    ul.menu>li {
+        cursor: pointer;
+        line-height: 2em;
+    }
+
+    ul.menu>li[active='yes'] {
+        color: red;
+    }
+
+    ul.menu>li.title {
+        font-size: 40px;
+        text-align: center;
+        user-select: none;
+        cursor: auto;
+        padding: 10px 0;
+    }
+
+    div.page {
+        width: calc(100vw - 300px);
+    }
+
+</style>

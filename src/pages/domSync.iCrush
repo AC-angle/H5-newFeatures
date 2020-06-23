@@ -1,0 +1,115 @@
+<template>
+    <div class='notepage'>
+        <h2>
+            DOM操作是同步还是异步的
+        </h2>
+        <p>
+            首先我想说明的是DOM操作其实不应该单纯的从结点的增删改查这个角度去理解，他应该包括（这里选择粗糙的语言来描述，放弃dom树或render渲染树这样准确的词汇，因为我感觉我这样说更容易理解）【对页面内容的修改】和【页面显示的同步】。
+        </p>
+        <p>
+            简单说明一下：内容你可以理解是html的修改，可是html和实际显示出来的效果是二回事，对吧，是的显示的同步才是计算出你最终看到的内容。
+        </p>
+        <h2>
+            结论
+        </h2>
+        <p>
+            我想先给出我的结论，然后证明一下（或者说验证更准确）：
+        </p>
+        <ul>
+            <li>
+                1.DOM操作本身应该是同步的，也就是修改html部分
+            </li>
+            <li>
+                2.DOM修改后页面的渲染是异步的，也就是html被修改了，页面的显示应该重新计算，这个计算是异步的
+            </li>
+        </ul>
+        <h2>
+            证明
+        </h2>
+        <div id='target1' class='example'></div>
+        <canvas id='canvas1' class='example'></canvas>
+        <p>
+            看看页面，第二个canvas什么也没有。
+        </p>
+        <p>
+            可是，如果我们把第二步绘制操作稍微延迟一点点，会怎么样？
+        </p>
+        <div id='target2' class='example'></div>
+        <canvas id='canvas2' class='example'></canvas>
+        <p>
+            好吧，你说对了，第二个canvas显示出来了。
+        </p>
+
+        <p>
+            为什么会这样？我的猜想是，绘制的时候，二个情况下，DOM肯定都拿到了（操作本身是同步的），只不过还没有渲染到页面上去（渲染异步），因此获取DOM内容绘制到canvas上的时候，第一个什么也没有。
+        </p>
+
+        <p>
+            DOM是同步的就不用证明了，因为drawImage这个方法调用的时候，如果结点查找失败会报错的。
+        </p>
+        <p>
+            你可以
+            <a href="https://github.com/AC-angle/H5-newFeatures/blob/master/src/pages/domSync.iCrush" target="_blank">点击此处</a>
+            查看代码，注意一共二个例子，js中有备注。
+        </p>
+    </div>
+</template>
+<script>
+    export default {
+        mounted() {
+
+            // 例子一
+            var divDom = document.createElement("div");
+            var template = '<img ' +
+                'id="img1" ' +
+                'width="300" ' +
+                'height="150" ' +
+                'src="data:image/svg+xml;charset=utf-8,<svg xmlns=\'http://www.w3.org/2000/svg\'><foreignObject ' +
+                'width=\'120\' ' +
+                'height=\'100\' ' +
+                '><body xmlns=\'http://www.w3.org/1999/xhtml\'>' +
+                '<p>例子1：' + new Date().valueOf() + '</p>' +
+                '</body></foreignObject></svg>" />';
+
+            // 第一步，添加到页面
+            document.getElementById('target1').innerHTML = template;
+
+            // 第二步：绘制到canvas上
+            document.getElementById('canvas1')
+                .getContext('2d')
+                .drawImage(document.getElementById('img1'), 0, 0);
+
+            // 例子二
+            var template = '<img ' +
+                'id="img2" ' +
+                'width="300" ' +
+                'height="150" ' +
+                'src="data:image/svg+xml;charset=utf-8,<svg xmlns=\'http://www.w3.org/2000/svg\'><foreignObject ' +
+                'width=\'120\' ' +
+                'height=\'100\' ' +
+                '><body xmlns=\'http://www.w3.org/1999/xhtml\'>' +
+                '<p>例子2：' + new Date().valueOf() + '</p>' +
+                '</body></foreignObject></svg>" />';
+
+            // 第一步，添加到页面
+            document.getElementById('target2').innerHTML = template;
+
+            // 第二步：绘制到canvas上
+            setTimeout(function () {
+                document.getElementById('canvas2')
+                    .getContext('2d')
+                    .drawImage(document.getElementById('img2'), 0, 0);
+            });
+        }
+    };
+
+</script>
+<style>
+    .example {
+        width: 300px;
+        border: 1px solid blue;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+</style>

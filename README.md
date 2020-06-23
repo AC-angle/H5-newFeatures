@@ -7,6 +7,10 @@
 
 - 另外，你也可以提[issue](https://github.com/AC-angle/H5-newFeatures/issues)来告诉我们你想看的特性或奇怪现象，我们会尽快提供并在[issue](https://github.com/AC-angle/H5-newFeatures/issues)上通知你。
 
+## 文章列表
+
+- [【0】 DOM操作是同步还是异步的](https://ac-angle.github.io/H5-newFeatures/index.html#domSync)
+
 ## 贡献者
 
 - [心叶](https://github.com/yelloxing)（yelloxing@gmail.com）
