@@ -31,7 +31,7 @@
     "cuf": "^1.2.0",
     "icrush-loader": "^0.2.1",
     "icrush-loader-plug": "^0.2.1",
-    "icrush-style-loader": "^1.0.2",
+    "icrush-style-loader": "^1.0.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0",
